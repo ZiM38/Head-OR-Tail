@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@drawable/bg_result">
+
+    <!-- Team Win Message -->
+    <TextView
+        android:id="@+id/tvFinalMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team A Wins!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- User Win/Lose Message -->
+    <TextView
+        android:id="@+id/tvMatchResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎉 You have won the Match!"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="30dp"/>
+
+    <!-- Back to Home Button -->
+    <Button
+        android:id="@+id/btnGoHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Home"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2196F3"/>
+</LinearLayout>
