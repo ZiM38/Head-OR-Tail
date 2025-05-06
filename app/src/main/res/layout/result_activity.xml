@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_stadium">
 
-    <!-- Score Info -->
+    <!-- 🏏 Score Info -->
     <TextView
         android:id="@+id/tvScoreBoard"
         android:layout_width="wrap_content"
@@ -17,30 +17,60 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"/>
 
-    <!-- Team B Dice -->
+    <!-- 🎲 Dice B FIRST -->
 
-    <!-- Team B Label -->
+    <!-- 🏷️ Team B Label AFTER Dice -->
 
-    <!-- Large Dice Result Number -->
+    <!-- 🏷️ Team A Label FIRST -->
 
     <ImageView
         android:id="@+id/diceB"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="134dp"
         android:src="@drawable/dice1" />
 
     <TextView
         android:id="@+id/tvTeamB"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/diceB"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="97dp"
-        android:layout_marginEnd="-3dp"
+        android:layout_alignTop="@id/diceB"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="-162dp"
+        android:layout_toStartOf="@id/diceB"
         android:background="@drawable/team_label"
         android:gravity="center"
         android:text="TEAM B"
         android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tvTeamA"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/team_label"
+        android:gravity="center"
+        android:text="TEAM A"
+        android:textColor="#FFFFFF" />
+
+    <!-- 🎲 Dice A AFTER Label -->
+
+    <!-- 🎲 Large Dice Result Number -->
+
+    <ImageView
+        android:id="@+id/diceA"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/tvTeamA"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="-14dp"
+        android:layout_toEndOf="@id/tvTeamA"
+        android:src="@drawable/dice1" />
 
     <TextView
         android:id="@+id/tvDiceResult"
@@ -52,42 +82,19 @@
         android:textStyle="bold"
         android:layout_centerInParent="true" />
 
-    <!-- Team A Label -->
+    <!-- ❌ OUT! TextView -->
     <TextView
-        android:id="@+id/tvTeamA"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="TEAM A"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/team_label"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginStart="40dp"/>
-
-    <!-- Team A Dice -->
-    <ImageView
-        android:id="@+id/diceA"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/dice1"
-        android:layout_below="@id/tvTeamA"
-        android:layout_alignStart="@id/tvTeamA"
-        android:layout_marginTop="8dp"/>
-
-    <!-- ✅ Restart Button: এখন নিচে নয়, Ball Button Row এর উপর -->
-    <Button
-        android:id="@+id/btnRestart"
+        android:id="@+id/tvOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Restart Game"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#FF5722"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/ballRow"
-        android:layout_marginBottom="20dp"/>
+        android:text="OUT!"
+        android:textColor="#FF0000"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
 
-    <!-- Dot Ball Button -->
+    <!-- ⚫ Dot Ball Button -->
     <Button
         android:id="@+id/btnDot"
         android:layout_width="50dp"
@@ -100,7 +107,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"/>
 
-    <!-- Six Ball Buttons -->
+    <!-- 🔘 Six Ball Buttons Row -->
     <LinearLayout
         android:id="@+id/ballRow"
         android:layout_width="wrap_content"
@@ -136,5 +143,11 @@
             android:text="6" />
     </LinearLayout>
 
+
+
 </RelativeLayout>
+
+
+
+
 

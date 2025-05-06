@@ -1,6 +1,7 @@
 package com.example.headortail;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,7 +15,7 @@ import java.util.Random;
 public class ResultActivity extends AppCompatActivity {
 
     private ImageView diceA, diceB;
-    private TextView tvDiceResult, tvScoreBoard;
+    private TextView tvDiceResult, tvScoreBoard, tvOut;
     private int totalBalls = 0;
     private int totalOvers = 1;
     private boolean userBatsFirst = true;
@@ -25,6 +26,9 @@ public class ResultActivity extends AppCompatActivity {
     private int targetScore = 0;
 
     private boolean isInningsOver = false;
+
+    // 🔊 MediaPlayer for game music
+    private MediaPlayer gameMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,12 @@ public class ResultActivity extends AppCompatActivity {
         diceB = findViewById(R.id.diceB);
         tvDiceResult = findViewById(R.id.tvDiceResult);
         tvScoreBoard = findViewById(R.id.tvScoreBoard);
-        Button btnRestart = findViewById(R.id.btnRestart);
+        tvOut = findViewById(R.id.tvOut);
+
+        // 🔊 Start game music
+        gameMusic = MediaPlayer.create(this, R.raw.game_music);
+        gameMusic.setLooping(true);
+        gameMusic.start();
 
         int[] ballIds = {
                 R.id.ball1, R.id.ball2, R.id.ball3,
@@ -49,26 +58,22 @@ public class ResultActivity extends AppCompatActivity {
             int runValue = i + 1;
             Button ballBtn = findViewById(ballIds[i]);
             ballBtn.setOnClickListener(v -> {
+                playSound(R.raw.tap_click);  // 🔊 tap sound
                 rollDice(runValue);
             });
         }
 
         Button btnDot = findViewById(R.id.btnDot);
         btnDot.setOnClickListener(v -> {
+            playSound(R.raw.tap_click);  // 🔊 tap sound
             rollDice(0);
-        });
-
-        btnRestart.setOnClickListener(v -> {
-            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
         });
 
         updateScoreBoard();
     }
 
     private void rollDice(int userGuess) {
-        if (isInningsOver) return; // innings শেষ হলে আর খেলা যাবে না
+        if (isInningsOver) return;
 
         Random random = new Random();
         int diceNumber = random.nextInt(6) + 1;
@@ -87,30 +92,34 @@ public class ResultActivity extends AppCompatActivity {
         if (isFirstInnings) {
             if (userBatsFirst) {
                 if (isOut) {
-                    // User out → innings over
+                    playSound(R.raw.player_out);  // 🔊 out sound
+                    showOutMessage();
                     isFirstInnings = false;
                     isInningsOver = false;
                     targetScore = userScore + 1;
                     totalBalls = 0;
                     tvScoreBoard.setText("OUT!\nTarget for AI: " + targetScore);
                 } else {
+                    playSound(R.raw.run_scored);  // 🔊 run sound
                     userScore += userGuess;
                     totalBalls++;
                 }
             } else {
                 if (isOut) {
+                    playSound(R.raw.player_out);
+                    showOutMessage();
                     isFirstInnings = false;
                     isInningsOver = false;
                     targetScore = aiScore + 1;
                     totalBalls = 0;
                     tvScoreBoard.setText("OUT!\nTarget for You: " + targetScore);
                 } else {
+                    playSound(R.raw.run_scored);
                     aiScore += userGuess;
                     totalBalls++;
                 }
             }
 
-            // Check if overs done
             if (totalBalls >= totalOvers * 6) {
                 isFirstInnings = false;
                 isInningsOver = false;
@@ -120,36 +129,38 @@ public class ResultActivity extends AppCompatActivity {
             }
 
         } else {
-            // Second Innings
             if (userBatsFirst) {
                 if (isOut) {
-                    // AI out before reaching target
-                    endGame("Team A"); // User wins
+                    playSound(R.raw.player_out);
+                    showOutMessage();
+                    endGame("Team A");
                     return;
                 } else {
+                    playSound(R.raw.run_scored);
                     aiScore += userGuess;
                     totalBalls++;
                     if (aiScore >= targetScore) {
-                        endGame("Team B"); // AI wins
+                        endGame("Team B");
                         return;
                     }
                 }
             } else {
                 if (isOut) {
-                    // User out before reaching target
-                    endGame("Team B"); // AI wins
+                    playSound(R.raw.player_out);
+                    showOutMessage();
+                    endGame("Team B");
                     return;
                 } else {
+                    playSound(R.raw.run_scored);
                     userScore += userGuess;
                     totalBalls++;
                     if (userScore >= targetScore) {
-                        endGame("Team A"); // User wins
+                        endGame("Team A");
                         return;
                     }
                 }
             }
 
-            // If overs done and target not reached
             if (totalBalls >= totalOvers * 6) {
                 if (userBatsFirst) {
                     endGame(aiScore >= targetScore ? "Team B" : "Team A");
@@ -164,6 +175,7 @@ public class ResultActivity extends AppCompatActivity {
 
     private void endGame(String winnerTeam) {
         isInningsOver = true;
+        if (gameMusic != null) gameMusic.stop(); // 🔇 Stop music when match ends
         Intent intent = new Intent(ResultActivity.this, FinalResultActivity.class);
         intent.putExtra("winner", winnerTeam);
         startActivity(intent);
@@ -191,7 +203,32 @@ public class ResultActivity extends AppCompatActivity {
                         "\nOvers: " + overs + "." + balls + extra
         );
     }
+
+    private void showOutMessage() {
+        tvOut.setVisibility(View.VISIBLE);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        tvOut.startAnimation(fadeIn);
+        tvOut.postDelayed(() -> tvOut.setVisibility(View.GONE), 1500);
+    }
+
+    // 🔊 Reusable sound play method
+    private void playSound(int soundResId) {
+        MediaPlayer mp = MediaPlayer.create(this, soundResId);
+        mp.start();
+        mp.setOnCompletionListener(MediaPlayer::release);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (gameMusic != null) {
+            gameMusic.release();
+            gameMusic = null;
+        }
+    }
 }
+
+
 
 
 

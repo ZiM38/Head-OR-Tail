@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Head or Tail</string>
+    <string name="default_web_client_id">your_firebase_web_client_id_here</string>
 </resources>

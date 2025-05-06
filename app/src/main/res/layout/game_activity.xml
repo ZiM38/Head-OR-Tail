@@ -2,22 +2,37 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_game">
 
-    <!-- Profile / Logo Image -->
+    <!-- 🔼 Profile Image (Top-left corner, small size) -->
     <ImageView
         android:id="@+id/imgProfile"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/profile_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp" />
 
-    <!-- 2 Player Button -->
+    <!-- 🟠 User ID Text beside profile -->
+    <TextView
+        android:id="@+id/tvUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="guest12345"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="@id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
+        app:layout_constraintStart_toEndOf="@id/imgProfile"
+        android:layout_marginStart="10dp" />
+
+    <!-- 🔘 2 Player Button -->
     <Button
         android:id="@+id/btnTwoPlayer"
         android:layout_width="200dp"
@@ -27,9 +42,9 @@
         app:layout_constraintTop_toBottomOf="@id/imgProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="60dp"/>
 
-    <!-- 1 Player Button -->
+    <!-- 🔘 1 Player Button -->
     <Button
         android:id="@+id/btnOnePlayer"
         android:layout_width="200dp"
@@ -41,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
-    <!-- Private Button -->
+    <!-- 🔘 Private Button -->
     <Button
         android:id="@+id/btnPrivate"
         android:layout_width="200dp"
@@ -53,18 +68,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
-    <!-- Home Button (Optional) -->
+    <!-- 🏠 Home Button -->
     <ImageButton
         android:id="@+id/btnHome"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_home"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_home2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
